@@ -14,14 +14,69 @@
 
 </head>
 <body>
-
+<!-- Login -->
+<div class="py-3 py-md-5" id="login-page" style="height: 100vh; background: url('/src/Light Blue Colorful School Zoom Virtual Background (2).png')">
+    <div class="container" style="margin-top: 100px;">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-4">
+                <div class="p-4 p-md-5" style="background: rgb(64, 64, 64); box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px; border-radius: 20px">
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            <div class="text-center">
+                                <a href="#!">
+                                    <img src="/src/tapchat (2) (1).png" alt="BootstrapBrain Logo" width="70%" height="70%">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="login-form">
+                        <div class="row gy-3 gy-md-4 overflow-hidden"  style="margin-top: -20px;">
+                            <div class="col-12">
+                                <label for="username" class="form-label text-white">Username <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                        <span class="input-group-text">
+                            <i class='bx bx-envelope'></i>
+                        </span>
+                                    <input type="text" class="form-control" name="username" id="username" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="password" class="form-label text-white">Password <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                        <span class="input-group-text">
+                            <i class='bx bxs-key' ></i>
+                        </span>
+                                    <input type="password" class="form-control" name="password" id="password" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-lg" type="submit">Đăng Nhập</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-12">
+                            <hr class="mt-5 mb-4 border-secondary-subtle text-white">
+                            <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-center">
+                                <a href="register.html" class="link-secondary text-decoration-none">Tạo mới tài khoản</a>
+                                <a href="#!" class="link-secondary text-decoration-none">Quên mật khẩu</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Chat -->
-<section class=" chat-container" id="chat-page">
+<section class=" chat-container hidden" id="chat-page">
     <div class="chat-container">
         <!-- Sidebar -->
         <aside class="chat-sidebar">
             <a href="#" class="chat-sidebar-logo">
-                <img src="./src/Bản sao của tapchat (1).png" alt="">
+                <img src="src/Bản sao của tapchat (1).png" alt="">
             </a>
             <ul class="chat-sidebar-menu">
                 <li class="active"><a href="#" data-title="Chat"><i class='bx bx-chat'></i></a></li>
@@ -29,7 +84,7 @@
                 <li><a href="#" data-title="Dark/Light" id="darkModeToggle" onclick="toggleDarkMode()"><i class='bx bx-moon'></i></a></li>
                 <li class="chat-sidebar-profile">
                     <button type="button" class="chat-sidebar-profile-toggle">
-                        <img src="./src/social-media-chatting-online-blank-profile-picture-head-and-body-icon-people-standing-icon-grey-background-free-vector.jpg" alt="">
+                        <img src="src/social-media-chatting-online-blank-profile-picture-head-and-body-icon-people-standing-icon-grey-background-free-vector.jpg" alt="">
                     </button>
                     <ul class="chat-sidebar-profile-dropdown">
                         <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="ri-user-line"></i> Profile</a></li>
@@ -55,7 +110,7 @@
                     <button data-title="friend" class="content-sidebar-btn">
                         <i class="ri-user-add-line"></i>
                     </button>
-                    <button data-title="group" class="content-sidebar-btn">
+                    <button data-title="group" class="content-sidebar-btn" onclick="showGroupForm()">
                         <i class="ri-group-line"></i>
                     </button>
                 </div>
@@ -63,19 +118,38 @@
                     <ul class="content-messages-list" id="connectedUsers">
                         <li class="content-message-title"><span>Message</span></li>
                     </ul>
+                    <!--                    <ul id="connectedUsersList" class="connected-users-list"></ul>-->
+                    <!--                    <ul id="connectedGroupList" class="connected-users-list"></ul>-->
                 </div>
+
+                <div id="groupFormPopup" class="popup">
+                    <div class="popup-content">
+                        <span class="close-btn" onclick="closeGroupForm()">&times;</span>
+                        <h2>Create Group</h2>
+                        <input type="text" id="groupName" placeholder="Group Name" class="input-field">
+                        <h3>Select Members</h3>
+                        <input type="text" id="searchUser" placeholder="Search User" onkeyup="searchUser()" class="input-field">
+                        <div id="userList" class="user-list"></div>
+                        <button onclick="createGroupHandler()" class="create-btn">Create Group</button>
+                    </div>
+                </div>
+
+
+
+                <div id="groupList" class="group-list"></div> <!-- Thêm phần tử này -->
+
             </div>
             <!-- Content side -->
             <!--  Conversation -->
-<!--            <div class="conversation conversation-default active">-->
-<!--                <i class="ri-chat-3-line"></i>-->
-<!--                <p>Select chat and view conversation!</p>-->
-<!--            </div>-->
+            <!--            <div class="conversation conversation-default active">-->
+            <!--                <i class="ri-chat-3-line"></i>-->
+            <!--                <p>Select chat and view conversation!</p>-->
+            <!--        </div>-->
             <div class="conversation active">
                 <div class="conversation-top">
                     <button type="button" class="conversation-back"><i class="ri-arrow-left-line"></i></button>
                     <div class="conversation-user">
-                        <img class="conversation-user-image" src="./src/social-media-chatting-online-blank-profile-picture-head-and-body-icon-people-standing-icon-grey-background-free-vector.jpg" alt="">
+                        <img class="conversation-user-image" src="src/social-media-chatting-online-blank-profile-picture-head-and-body-icon-people-standing-icon-grey-background-free-vector.jpg" alt="">
                         <div>
                             <div class="conversation-user-name"></div>
                             <div class="conversation-user-status online">online</div>
@@ -84,7 +158,7 @@
                     <div class="conversation-buttons">
                         <button type="button"><i class="ri-search-line"></i></button>
                         <button type="button"><i class="ri-phone-fill"></i></button>
-                        <button type="button"><i class="ri-vidicon-line"></i></button>
+                        <button type="button" id="videoCallButton"><i class="ri-vidicon-line"></i></button>
                         <button type="button"><i class="ri-more-2-fill"></i></button>
                     </div>
                 </div>
@@ -94,7 +168,7 @@
                     </ul>
                 </div>
                 <form class="conversation-form" id="messageForm" name="messageForm" class="hidden">
-<!--                    <button type="button" class="conversation-form-button"><i class="ri-emotion-line"></i></button>-->
+                    <!--                    <button type="button" class="conversation-form-button"><i class="ri-emotion-line"></i></button>-->
                     <button type="button" class="conversation-form-button" id="attachmentButton">
                         <i class="ri-attachment-line"></i>
                     </button>
@@ -110,8 +184,14 @@
             <!--  Conversation -->
         </div>
         <!--  Content -->
+        <!--  Video Call  -->
+        <div class="video-container" style="display:none;">
+            <video id="localVideo" autoplay muted></video>
+            <video id="remoteVideo" autoplay></video>
+            <button id="startCall">Start Call</button>
+            <button id="stopCall" disabled>Stop Call</button>
+        </div>
     </div>
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -120,15 +200,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="register-form">
+                    <form id="update-form">
                         <div class="row gy-3 gy-md-4 overflow-hidden" style="margin-top: -20px;">
                             <div class="col-12">
-                                <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
+                                <label for="username2" class="form-label">Username <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                 <span class="input-group-text">
                                     <i class='bx bx-user'></i>
                                 </span>
-                                    <input type="text" class="form-control" name="username" id="username" readonly style="background: transparent;">
+                                    <input type="text" class="form-control" name="username" id="username2" readonly style="background: transparent;">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -192,6 +272,7 @@
         </div>
     </div>
 </section>
+
 <!-- Chat -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -239,7 +320,7 @@
        fetch(`http://localhost:8088/api/v1/auth/user/${username}`)
            .then(response => response.json())
            .then(data => {
-               $('#username').val(data.username);
+               $('#username2').val(data.username);
                $('#username1').val(data.username);
                $('#name').val(data.name);
                $('#email').val(data.email);
@@ -251,7 +332,7 @@
    e.preventDefault();
 
    var formData = {
-       username: $("#username").val(),
+       username: $("#username2").val(),
        name: $("#name").val(),
        email: $("#email").val(),
    };
@@ -265,7 +346,6 @@
    })
    .then(response => {
        if (!response.ok) {
-           throw new Error("Update failed");
        }
        return response.json();
    })

@@ -1,6 +1,7 @@
 package com.example.WebChatRealTime.Controller;
 
 import com.example.WebChatRealTime.Entity.Role;
+import com.example.WebChatRealTime.Entity.Status;
 import com.example.WebChatRealTime.Entity.User;
 import com.example.WebChatRealTime.Service.UserService;
 import com.example.WebChatRealTime.dto.*;
@@ -10,6 +11,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,7 +32,6 @@ public class AuthController {
     private final UserService userDetailsService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-
     @PostMapping("/login")
     public ResponseEntity<AuthRespDto> login(@RequestBody AuthReqDto authReqDto) {
         log.info("Login request received for user: {}", authReqDto.getUsername());
@@ -59,12 +62,12 @@ public class AuthController {
                 .name(registerReqDto.getName())
                 .username(registerReqDto.getUsername())
                 .password(encodedPassword)
+                .status(Status.ONLINE)
                 .role(Role.ROLE_USER) // or Role.ROLE_ADMIN based on your requirement
                 .build();
 
         // Save user using userDetailsService
         userDetailsService.saveUser(newUser);
-
         // Return successful response
         return ResponseEntity.ok(new RegisterRespDto("User registered successfully"));
     }
